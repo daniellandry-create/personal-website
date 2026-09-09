@@ -4,50 +4,141 @@ import { siteConfig } from "../site.config";
 
 const skillGroups = [
   {
-    title: "Languages",
-    items: ["TypeScript", "JavaScript", "Python", "SQL"],
+    title: "Programming",
+    items: ["C", "C++ (Arduino)", "Python", "Bash", "Assembly (novice)"],
   },
   {
-    title: "Frontend",
-    items: ["React", "Astro", "Vue", "HTML/CSS", "Accessibility (WCAG)"],
+    title: "Software & tools",
+    items: [
+      "SolidWorks",
+      "AWS (S3, IAM)",
+      "MISP",
+      "Git/GitHub",
+      "Notion",
+      "Linear",
+      "Google Workspace",
+    ],
+  },
+];
+
+const experience = [
+  {
+    title: "Summer Intern, Technology, Policy, & Operations (TPO) Group",
+    org: "Water Watch Center (WWC)",
+    dates: "Jun. - Aug. 2026",
+    bullets: [
+      "Helped stand up threat-intelligence sharing for the WWC, pairing 50,000+ rural water utilities with vetted security providers; supported deployment and configuration of a MISP platform.",
+      "Wrote Python scripts to test the MISP REST client and feeds against an AWS S3 event store, confirming events persisted correctly and surfacing config gaps before utilities connected.",
+      "Audited the WWC network architecture against the Purdue Model across 6 network layers to validate operational security for industrial OT environments.",
+      "Built a micro-SaaS with AI-assisted development and AWS tooling to let staff self-serve business-card orders, saving up to 20 minutes per order and now used by all 15 company employees.",
+    ],
   },
   {
-    title: "Backend",
-    items: ["Node.js", "FastAPI", "PostgreSQL", "REST/GraphQL APIs"],
+    title: "Project Manager, Design For America",
+    org: "Yale Schwarzman Center",
+    dates: "Oct. 2025 - Present",
+    bullets: [
+      "Leading 10+ students building a Postcard-Vending Machine for Yale student artists to showcase their work in a major campus thoroughfare.",
+      "Designing the machine's mechanical and electrical systems from scratch on a $1,000 budget using CAD, electronics, and rapid prototyping.",
+    ],
   },
   {
-    title: "Tooling",
-    items: ["Git", "Docker", "GitHub Actions", "Vitest/Playwright"],
+    title: "Tour Guide & Deckhand",
+    org: "Portland Discovery Land & Sea Tours, Portland, ME",
+    dates: "May - Aug. 2025, 2026",
+    bullets: [
+      "Responsible for guest experience on cruises of up to 100 passengers through the Casco Bay islands; delivered two-hour narrated tours on 12+ hour shifts plus bartending and docking duties.",
+    ],
+  },
+  {
+    title: "Team Member & Practice Coordinator, Yale Club Tennis",
+    org: "New Haven, CT",
+    dates: "Sep. 2024 - Present",
+    bullets: [
+      "Planned and coordinated 60+ practices across the school year, managing court scheduling and attendance.",
+    ],
+  },
+  {
+    title: "Tennis Director Assistant",
+    org: "Ocean Park Association, Ocean Park, ME",
+    dates: "Jun. - Aug. 2020 - 2024",
+    bullets: [
+      "Managed clay court reservations, maintenance, and 20-player round-robin programming through peak summer demand.",
+      "Oversaw daily opening/closing operations and onboarded seasonal staff.",
+    ],
   },
 ];
 ---
 
 <BaseLayout
   title="About"
-  description={`Background, skills, and experience for ${siteConfig.name}.`}
+  description={`Background, experience, and skills for ${siteConfig.name}.`}
 >
   <div class="container">
     <header class="page-header">
       <p class="eyebrow">About</p>
-      <h1>[YOUR NAME HERE]</h1>
+      <h1>Daniel Landry</h1>
       <p class="text-lead">
-        [YOUR BIO HERE — replace with two or three paragraphs about your background, what you work
-        on, and what you care about professionally. Mention your current role, years of experience,
-        and the kind of problems you like solving.]
+        I'm a B.S. Electrical Engineering & Computer Science student at Yale University (Berkeley
+        College), expected May 2028. I like projects that sit at the intersection of hardware and
+        software -- circuits, embedded systems, CAD, and code -- and I've spent the last few summers
+        splitting time between that and hands-on work in threat intelligence and cloud tooling.
       </p>
     </header>
 
     <section class="section--tight prose">
       <p>
-        [Continue your bio here. A good structure: where you started, what you've worked on since,
-        and what you're focused on now. You can also mention your location (
-        <strong>{siteConfig.location}</strong>) and how you like to work — remote, in-person,
-        freelance, full-time, etc.]
+        Outside of coursework and internships, I lead the build of a Postcard-Vending Machine for
+        student artists with Design For America, help build a dice-rendering mural machine, and
+        coordinate practices for Yale Club Tennis. I'm based in {siteConfig.location}.
       </p>
       <p>
-        [Add a short paragraph on interests outside of work if you'd like the page to feel more
-        personal — this is optional but often makes an About page more memorable.]
+        Outside of engineering, I'm part of Danceworks and play intramural basketball, soccer,
+        pickleball, and broomball -- plus some art on the side. [Add more about your interests
+        outside of work here if you'd like.]
       </p>
+    </section>
+
+    <section class="section--tight">
+      <h2>Education</h2>
+      <div class="experience-item" style="margin-top:1.5rem;">
+        <div class="experience-item__header">
+          <div>
+            <p class="experience-item__title">
+              B.S. Electrical Engineering & Computer Science, Yale University (Berkeley College)
+            </p>
+            <p class="experience-item__org">New Haven, CT · GPA 3.82 / 4.00</p>
+          </div>
+          <p class="experience-item__dates">Expected May 2028</p>
+        </div>
+        <p class="text-muted" style="margin-top:0.6rem;font-size:0.95rem;">
+          Relevant coursework: Systems Programming and Computer Organization, Digital Systems,
+          Circuits and Systems Design, Data Structures, Computer-Aided Engineering, Creative
+          Embedded Systems, Intelligent Robotics.
+        </p>
+      </div>
+    </section>
+
+    <section class="section--tight">
+      <h2>Experience</h2>
+      <div class="experience-list" style="margin-top:1.5rem;">
+        {experience.map((role) => (
+          <div class="experience-item">
+            <div class="experience-item__header">
+              <div>
+                <p class="experience-item__title">{role.title}</p>
+                <p class="experience-item__org">{role.org}</p>
+              </div>
+              <p class="experience-item__dates">{role.dates}</p>
+            </div>
+            <ul>
+              {role.bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </section>
 
     <section class="section--tight">
