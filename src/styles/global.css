@@ -5,20 +5,24 @@
    attribute so a manual toggle always wins over the OS setting.
    ------------------------------------------------------------------------ */
 :root {
-  --color-bg: #fbfaf7;
+  --color-bg: #f6f8fc;
   --color-bg-elevated: #ffffff;
-  --color-bg-inset: #f2f0ea;
-  --color-text: #16181b;
-  --color-text-muted: #53575f;
-  --color-text-faint: #7a7e86;
-  --color-border: #e3e0d8;
-  --color-border-strong: #c9c5b8;
-  --color-accent: #0d7d6e;
-  --color-accent-strong: #085f53;
-  --color-accent-soft: #e4f3ef;
+  --color-bg-inset: #eaf0f8;
+  --color-text: #0e1726;
+  --color-text-muted: #47546b;
+  --color-text-faint: #6c7a91;
+  --color-border: #dbe4f0;
+  --color-border-strong: #b7c6dc;
+  /* Yale Blue -- primary/interactive accent */
+  --color-accent: #00356b;
+  --color-accent-strong: #002548;
+  --color-accent-soft: #e3ecf7;
   --color-accent-contrast: #ffffff;
+  /* Lighter azure -- sprinkled for decorative gradients, chips, secondary accents */
+  --color-accent-2: #235d99;
+  --color-accent-2-soft: #dcebfa;
   --color-danger: #b3261e;
-  --color-focus-ring: #0d7d6e;
+  --color-focus-ring: #00356b;
 
   --font-sans:
     "Inter var", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
@@ -31,9 +35,9 @@
   --radius-md: 12px;
   --radius-lg: 20px;
 
-  --shadow-sm: 0 1px 2px rgba(22, 24, 27, 0.06);
-  --shadow-md: 0 8px 24px rgba(22, 24, 27, 0.08);
-  --shadow-lg: 0 20px 48px rgba(22, 24, 27, 0.14);
+  --shadow-sm: 0 1px 2px rgba(14, 23, 38, 0.06);
+  --shadow-md: 0 8px 24px rgba(14, 23, 38, 0.08);
+  --shadow-lg: 0 20px 48px rgba(14, 23, 38, 0.14);
 
   --container-width: 72rem;
   --transition-fast: 150ms ease;
@@ -44,20 +48,23 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg: #101113;
-    --color-bg-elevated: #17191c;
-    --color-bg-inset: #1c1e22;
-    --color-text: #f2f1ec;
-    --color-text-muted: #aeb1b8;
-    --color-text-faint: #82858d;
-    --color-border: #2b2d31;
-    --color-border-strong: #3a3d43;
-    --color-accent: #45d8c2;
-    --color-accent-strong: #7de8d8;
-    --color-accent-soft: #123330;
-    --color-accent-contrast: #062420;
+    --color-bg: #0a101c;
+    --color-bg-elevated: #101828;
+    --color-bg-inset: #16213d;
+    --color-text: #eef3fb;
+    --color-text-muted: #a8b6cc;
+    --color-text-faint: #7c8bab;
+    --color-border: #223151;
+    --color-border-strong: #324768;
+    /* A lighter azure than Yale Blue itself, so it stays legible on a dark ground */
+    --color-accent: #6ca6e8;
+    --color-accent-strong: #a6c9f2;
+    --color-accent-soft: #17263f;
+    --color-accent-contrast: #06152b;
+    --color-accent-2: #86b6ea;
+    --color-accent-2-soft: #14243d;
     --color-danger: #ff8a80;
-    --color-focus-ring: #45d8c2;
+    --color-focus-ring: #6ca6e8;
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
@@ -68,20 +75,22 @@
 }
 
 :root[data-theme="dark"] {
-  --color-bg: #101113;
-  --color-bg-elevated: #17191c;
-  --color-bg-inset: #1c1e22;
-  --color-text: #f2f1ec;
-  --color-text-muted: #aeb1b8;
-  --color-text-faint: #82858d;
-  --color-border: #2b2d31;
-  --color-border-strong: #3a3d43;
-  --color-accent: #45d8c2;
-  --color-accent-strong: #7de8d8;
-  --color-accent-soft: #123330;
-  --color-accent-contrast: #062420;
+  --color-bg: #0a101c;
+  --color-bg-elevated: #101828;
+  --color-bg-inset: #16213d;
+  --color-text: #eef3fb;
+  --color-text-muted: #a8b6cc;
+  --color-text-faint: #7c8bab;
+  --color-border: #223151;
+  --color-border-strong: #324768;
+  --color-accent: #6ca6e8;
+  --color-accent-strong: #a6c9f2;
+  --color-accent-soft: #17263f;
+  --color-accent-contrast: #06152b;
+  --color-accent-2: #86b6ea;
+  --color-accent-2-soft: #14243d;
   --color-danger: #ff8a80;
-  --color-focus-ring: #45d8c2;
+  --color-focus-ring: #6ca6e8;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
@@ -596,7 +605,7 @@ select:focus-visible,
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--color-border);
-  background: linear-gradient(160deg, var(--color-accent-soft), var(--color-bg-inset));
+  background: linear-gradient(160deg, var(--color-accent-soft), var(--color-accent-2-soft));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -651,7 +660,7 @@ select:focus-visible,
 
 .project-card__media {
   aspect-ratio: 16 / 10;
-  background: linear-gradient(135deg, var(--color-accent-soft), var(--color-bg-inset));
+  background: linear-gradient(135deg, var(--color-accent-soft), var(--color-accent-2-soft));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -702,8 +711,8 @@ select:focus-visible,
   font-weight: 600;
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
-  background: var(--color-bg-inset);
-  color: var(--color-text-muted);
+  background: var(--color-accent-2-soft);
+  color: var(--color-accent-2);
   border: 1px solid var(--color-border);
 }
 
@@ -726,46 +735,54 @@ select:focus-visible,
 }
 
 /* ------------------------------------------------------------------------
-   Blog listing
+   Empty state
    ------------------------------------------------------------------------ */
-.post-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.post-list__item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem 1.5rem;
-  padding: 1.35rem 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.post-list__item a {
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.post-list__item a:hover {
-  color: var(--color-accent-strong);
-}
-
-.post-list__meta {
-  font-size: 0.85rem;
-  color: var(--color-text-faint);
-  white-space: nowrap;
-}
-
-.post-list__empty {
+.empty-state {
   padding: 2rem;
   text-align: center;
   color: var(--color-text-muted);
   border: 1px dashed var(--color-border-strong);
   border-radius: var(--radius-md);
+}
+
+/* ------------------------------------------------------------------------
+   Project media gallery (photo/video placeholders)
+   ------------------------------------------------------------------------ */
+.media-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.media-gallery__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+.media-placeholder {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: linear-gradient(160deg, var(--color-accent-soft), var(--color-accent-2-soft));
+  color: var(--color-accent-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.media-placeholder svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  opacity: 0.85;
+}
+
+.media-placeholder--video {
+  aspect-ratio: 16 / 9;
 }
 
 /* ------------------------------------------------------------------------
@@ -884,6 +901,67 @@ select:focus-visible,
 
 .contact-methods a:hover {
   text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------------
+   Experience list (about page)
+   ------------------------------------------------------------------------ */
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.experience-item__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.35rem 1rem;
+}
+
+.experience-item__title {
+  font-weight: 650;
+  font-size: 1.05rem;
+}
+
+.experience-item__org {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.15rem;
+}
+
+.experience-item__dates {
+  font-size: 0.85rem;
+  color: var(--color-text-faint);
+  white-space: nowrap;
+}
+
+.experience-item ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.6rem;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.experience-item li {
+  padding-left: 1.1em;
+  position: relative;
+}
+
+.experience-item li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-accent-2);
 }
 
 /* ------------------------------------------------------------------------
