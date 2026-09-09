@@ -11,6 +11,10 @@ const projects = defineCollection({
       // back to a placeholder tile when omitted.
       image: image().optional(),
       imageAlt: z.string().optional(),
+      // e.g. "Team Member", "Project Manager"
+      role: z.string().optional(),
+      // e.g. "Mar. 2026 - Present"
+      dateRange: z.string().optional(),
       tags: z.array(z.string()).default([]),
       liveUrl: z.string().url().optional(),
       repoUrl: z.string().url().optional(),
@@ -20,16 +24,4 @@ const projects = defineCollection({
     }),
 });
 
-const blog = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    tags: z.array(z.string()).default([]),
-    draft: z.boolean().default(false),
-  }),
-});
-
-export const collections = { projects, blog };
+export const collections = { projects };

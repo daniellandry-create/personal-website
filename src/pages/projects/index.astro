@@ -16,9 +16,8 @@ const projects = (await getCollection("projects")).sort((a, b) => {
       <p class="eyebrow">Projects</p>
       <h1>Selected work</h1>
       <p>
-        A few things I've built. Each entry links to a live demo and/or source where available.
-        [Replace these with your own projects by editing the files in
-        <code>src/content/projects/</code>.]
+        A few things I'm building, mostly at the intersection of hardware and software. More photos
+        and video are on the way as each project develops.
       </p>
     </header>
 
@@ -30,7 +29,7 @@ const projects = (await getCollection("projects")).sort((a, b) => {
           ))}
         </div>
       ) : (
-        <p class="post-list__empty">No projects yet — check back soon.</p>
+        <p class="empty-state">No projects yet — check back soon.</p>
       )}
     </section>
   </div>

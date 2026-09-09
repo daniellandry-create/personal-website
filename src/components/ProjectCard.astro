@@ -8,8 +8,10 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, description, image, imageAlt, tags, liveUrl, repoUrl } = project.data;
-const primaryHref = liveUrl ?? repoUrl;
+const { title, description, image, imageAlt, role, dateRange, tags, liveUrl, repoUrl } =
+  project.data;
+const base = import.meta.env.BASE_URL;
+const detailHref = `${base}projects/${project.id}/`;
 ---
 
 <article class="card project-card">
@@ -28,7 +30,16 @@ const primaryHref = liveUrl ?? repoUrl;
     )}
   </div>
   <div class="project-card__body">
-    <h3 class="project-card__title">{primaryHref ? <a href={primaryHref}>{title}</a> : title}</h3>
+    <h3 class="project-card__title">
+      <a href={detailHref}>{title}</a>
+    </h3>
+    {(role || dateRange) && (
+      <p class="text-muted" style="font-size:0.85rem;margin-top:-0.4rem;">
+        {role}
+        {role && dateRange && " · "}
+        {dateRange}
+      </p>
+    )}
     <p class="project-card__desc">{description}</p>
     {tags.length > 0 && (
       <ul class="tag-list">
@@ -38,6 +49,9 @@ const primaryHref = liveUrl ?? repoUrl;
       </ul>
     )}
     <div class="project-card__links">
+      <a href={detailHref}>
+        View project <Icon name="arrow-right" style="width:0.85em;height:0.85em;display:inline" />
+      </a>
       {liveUrl && (
         <a href={liveUrl} target="_blank" rel="noopener noreferrer">
           Live demo <Icon name="external" style="width:0.85em;height:0.85em;display:inline" />
