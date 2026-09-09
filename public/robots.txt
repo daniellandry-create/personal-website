@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://daniellandry-create.github.io/personal-website/sitemap-index.xml
