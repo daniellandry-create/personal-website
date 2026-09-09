@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../site.config";
+
+const skillGroups = [
+  {
+    title: "Languages",
+    items: ["TypeScript", "JavaScript", "Python", "SQL"],
+  },
+  {
+    title: "Frontend",
+    items: ["React", "Astro", "Vue", "HTML/CSS", "Accessibility (WCAG)"],
+  },
+  {
+    title: "Backend",
+    items: ["Node.js", "FastAPI", "PostgreSQL", "REST/GraphQL APIs"],
+  },
+  {
+    title: "Tooling",
+    items: ["Git", "Docker", "GitHub Actions", "Vitest/Playwright"],
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description={`Background, skills, and experience for ${siteConfig.name}.`}
+>
+  <div class="container">
+    <header class="page-header">
+      <p class="eyebrow">About</p>
+      <h1>[YOUR NAME HERE]</h1>
+      <p class="text-lead">
+        [YOUR BIO HERE — replace with two or three paragraphs about your background, what you work
+        on, and what you care about professionally. Mention your current role, years of experience,
+        and the kind of problems you like solving.]
+      </p>
+    </header>
+
+    <section class="section--tight prose">
+      <p>
+        [Continue your bio here. A good structure: where you started, what you've worked on since,
+        and what you're focused on now. You can also mention your location (
+        <strong>{siteConfig.location}</strong>) and how you like to work — remote, in-person,
+        freelance, full-time, etc.]
+      </p>
+      <p>
+        [Add a short paragraph on interests outside of work if you'd like the page to feel more
+        personal — this is optional but often makes an About page more memorable.]
+      </p>
+    </section>
+
+    <section class="section--tight">
+      <h2>Skills & technologies</h2>
+      <div class="skills-grid" style="margin-top:1.5rem;">
+        {skillGroups.map((group) => (
+          <div class="skill-group">
+            <h3>{group.title}</h3>
+            <ul>
+              {group.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

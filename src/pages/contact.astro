@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { siteConfig, socialLinks } from "../site.config";
+
+const hasForm = siteConfig.formspreeEndpoint.length > 0;
+---
+
+<BaseLayout title="Contact" description={`Get in touch with ${siteConfig.name}.`}>
+  <div class="container">
+    <header class="page-header">
+      <p class="eyebrow">Contact</p>
+      <h1>Let's talk</h1>
+      <p>The fastest way to reach me is email. You can also find me on the platforms below.</p>
+    </header>
+
+    <section
+      class="section--tight"
+      style="display:grid;gap:3rem;grid-template-columns:1fr;max-width:56rem;"
+    >
+      <div style={hasForm ? "display:grid;gap:3rem;grid-template-columns:1fr 1fr;" : undefined}>
+        <div>
+          <h2 style="margin-bottom:1.25rem;">Direct</h2>
+          <ul class="contact-methods">
+            <li>
+              <Icon name="mail" style="width:1em;height:1em;display:inline;margin-right:0.4em;" />
+              <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+            </li>
+            {socialLinks.map((social) => (
+              <li>
+                <Icon
+                  name={social.icon}
+                  style="width:1em;height:1em;display:inline;margin-right:0.4em;"
+                />
+                <a href={social.href} target="_blank" rel="noopener noreferrer">
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="text-muted" style="margin-top:1.5rem;">
+            Based in {siteConfig.location}. [Add availability, timezone, or response-time notes here
+            if useful.]
+          </p>
+        </div>
+
+        {hasForm ? (
+          <div>
+            <h2 style="margin-bottom:1.25rem;">Send a message</h2>
+            <form class="form" action={siteConfig.formspreeEndpoint} method="POST">
+              <div class="form-field">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required autocomplete="name" />
+              </div>
+              <div class="form-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="_replyto" required autocomplete="email" />
+              </div>
+              <div class="form-field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+              </div>
+              {/* Honeypot field to cut down on basic spam bots */}
+              <input
+                type="text"
+                name="_gotcha"
+                style="position:absolute;left:-9999px;"
+                tabindex="-1"
+                autocomplete="off"
+              />
+              <button type="submit" class="btn btn-primary">
+                Send message
+              </button>
+              <p class="form-hint">
+                This form submits to Formspree — no data is stored on this site.
+              </p>
+            </form>
+          </div>
+        ) : null}
+      </div>
+
+      {!hasForm && (
+        <p class="form-hint">
+          To enable the contact form, create a free endpoint at{" "}
+          <a
+            class="link-inline"
+            href="https://formspree.io"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            formspree.io
+          </a>{" "}
+          and set <code>formspreeEndpoint</code> in <code>src/site.config.ts</code>.
+        </p>
+      )}
+    </section>
+  </div>
+</BaseLayout>

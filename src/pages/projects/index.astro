@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { siteConfig } from "../../site.config";
+
+const projects = (await getCollection("projects")).sort((a, b) => {
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+  return a.data.order - b.data.order;
+});
+---
+
+<BaseLayout title="Projects" description={`A selection of projects by ${siteConfig.name}.`}>
+  <div class="container">
+    <header class="page-header">
+      <p class="eyebrow">Projects</p>
+      <h1>Selected work</h1>
+      <p>
+        A few things I've built. Each entry links to a live demo and/or source where available.
+        [Replace these with your own projects by editing the files in
+        <code>src/content/projects/</code>.]
+      </p>
+    </header>
+
+    <section class="section--tight">
+      {projects.length > 0 ? (
+        <div class="grid grid--projects">
+          {projects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      ) : (
+        <p class="post-list__empty">No projects yet — check back soon.</p>
+      )}
+    </section>
+  </div>
+</BaseLayout>
