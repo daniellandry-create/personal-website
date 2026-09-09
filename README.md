@@ -1,13 +1,9 @@
 # Personal Website
 
-A fast, accessible personal portfolio and blog, built as a fully static
-site and deployed automatically to GitHub Pages.
+Daniel Landry's personal portfolio site, built as a fully static site and
+deployed automatically to GitHub Pages.
 
 **Live site:** https://daniellandry-create.github.io/personal-website/
-
-> This repo ships with realistic placeholder content so it looks complete
-> out of the box. Anything you should replace is marked with
-> `[LIKE THIS]`. See [Next steps](#next-steps) for the full checklist.
 
 ## Tech stack
 
@@ -15,8 +11,8 @@ site and deployed automatically to GitHub Pages.
   build time, ships zero JavaScript by default, and only the handful of
   small interactive bits on this site (theme toggle, mobile nav) send any
   JS to the browser at all. Content is authored as Markdown with
-  frontmatter via Astro's content collections, so adding a project or
-  blog post never touches layout code.
+  frontmatter via Astro's content collections, so adding a project never
+  touches layout code.
 - **Plain CSS** (custom properties, no framework) — a small, hand-rolled
   design system (`src/styles/global.css`) keeps the output lean and the
   look distinct rather than "generic component-library."
@@ -27,9 +23,9 @@ site and deployed automatically to GitHub Pages.
   for consistent formatting and linting.
 
 Why not a bigger framework (Next.js, etc.)? There's no interactivity here
-that needs a client-side router or server rendering — a portfolio and
-blog is exactly the case static-site generation is for. Astro produces
-the smallest, fastest output for that job while still giving component
+that needs a client-side router or server rendering — a portfolio site is
+exactly the case static-site generation is for. Astro produces the
+smallest, fastest output for that job while still giving component
 reuse, TypeScript, and a Markdown-based content model.
 
 ## Project structure
@@ -39,16 +35,15 @@ reuse, TypeScript, and a Markdown-based content model.
 ├── .github/workflows/     # CI + GitHub Pages deploy
 ├── public/                # Copied as-is: favicon, OG image, robots.txt, resume.pdf
 ├── src/
-│   ├── components/        # Header, Footer, ProjectCard, ThemeToggle, Icon, ...
+│   ├── components/        # Header, Footer, ProjectCard, MediaGallery, ThemeToggle, Icon, ...
 │   ├── content/
-│   │   ├── projects/      # One Markdown file per project (data-driven grid)
-│   │   └── blog/          # One Markdown file per post
-│   ├── content.config.ts  # Content collection schemas (Zod)
+│   │   └── projects/      # One Markdown file per project (data-driven grid + detail page)
+│   ├── content.config.ts  # Content collection schema (Zod)
 │   ├── layouts/
 │   │   └── BaseLayout.astro  # <head>, meta/OG/JSON-LD, header/footer shell
-│   ├── pages/              # File-based routing (index, about, projects, blog, contact, 404)
+│   ├── pages/              # File-based routing: index, about, projects (+ [slug]), resume, contact, 404
 │   ├── site.config.ts      # Name, nav links, social links, contact info -- edit this first
-│   └── styles/global.css   # Design tokens (light/dark) + all component styles
+│   └── styles/global.css   # Design tokens (light/dark, Yale Blue palette) + all component styles
 ├── astro.config.mjs
 └── package.json
 ```
@@ -85,57 +80,50 @@ Add a new Markdown file to `src/content/projects/`:
 ---
 title: "Project Name"
 description: "One or two sentences describing the project."
-tags: ["TypeScript", "React"]
+role: "Team Member" # optional
+dateRange: "Mar. 2026 - Present" # optional
+tags: ["SolidWorks", "Arduino"]
 liveUrl: "https://example.com" # optional
 repoUrl: "https://github.com/you/project" # optional
 featured: true # shows on the home page
 order: 1 # lower sorts first
 ---
 
-Optional longer write-up in Markdown. Not currently rendered on the
-project detail — this schema is intentionally lightweight (a card grid),
-but you can extend `src/content.config.ts` and `ProjectCard.astro` if you
-want a full project detail page per entry, the same way blog posts work.
+The rest of the file is Markdown and renders on the project's own page
+(`/projects/<filename-without-extension>/`), below the title/tags and
+above a photo/video placeholder gallery (see below).
 ```
 
 The schema lives in `src/content.config.ts`. It's validated at build
 time — a missing required field fails the build with a clear error
-instead of shipping a broken card.
-
-## Adding a blog post
-
-Add a new Markdown file to `src/content/blog/`:
-
-```markdown
----
-title: "Post Title"
-description: "Shows in the blog index and in social share previews."
-date: 2026-03-01
-tags: ["notes"]
-draft: false # true hides it from production builds, still visible in `npm run dev`
----
-
-Your post content in Markdown.
-```
-
-It appears automatically on `/blog/`, newest first, at
-`/blog/<filename-without-extension>/`.
+instead of shipping a broken card. Each project also gets its own detail
+page at `src/pages/projects/[...slug].astro`, which renders the
+project's Markdown body plus a `<MediaGallery />` — a row of dashed
+placeholder tiles for photos and a video. Once you have real media,
+replace a `.media-placeholder` tile with an `<Image />`
+(`astro:assets`) or a `<video>`/embed — see the comment at the bottom of
+`src/components/MediaGallery.astro` for the exact swap.
 
 ## Design
 
+- **Color palette**: Yale Blue (`#00356b`) as the primary/interactive
+  accent, with a lighter azure (`--color-accent-2`) sprinkled into tags
+  and decorative gradients, and cool blue-gray neutrals throughout. All
+  defined as CSS custom properties in `src/styles/global.css`, separately
+  for light and dark — change the palette there.
 - **Theme**: light/dark toggle in the header, persisted to
   `localStorage`, defaulting to the OS `prefers-color-scheme`. A
   synchronous inline script in `<head>` applies the stored/preferred
   theme before first paint, so there's no flash of the wrong theme.
 - **Typography**: a system-font stack (no webfont network request — this
   is a deliberate performance choice, see [Performance](#performance-and-seo)).
-- **Colors, spacing, radii, shadows**: all defined as CSS custom
-  properties in `src/styles/global.css`, separately for light and dark.
-  Change the palette there.
 - **Contact form**: `/contact/` renders a [Formspree](https://formspree.io)
   form once you set `formspreeEndpoint` in `src/site.config.ts`; until
   then it shows the direct contact methods only (no backend required
   either way).
+- **Resume**: `/resume/` embeds `public/resume.pdf` in-page (with a
+  download button) rather than linking straight to the file, so it reads
+  as a real page of the site.
 
 ## Performance and SEO
 
@@ -144,11 +132,10 @@ It appears automatically on `/blog/`, newest first, at
 - System-font stack avoids a webfont network request entirely.
 - Images go through Astro's built-in `<Image />` component
   (`astro:assets`, Sharp-powered) for automatic optimization and
-  `loading="lazy"` when you add real project screenshots.
+  `loading="lazy"` once you add real project photos.
 - Per-page `<title>`/`<meta description>`, canonical URLs, Open Graph +
-  Twitter Card tags, and JSON-LD (`Person` + `WebSite`, plus
-  `BlogPosting` on post pages) are all generated in
-  `src/layouts/BaseLayout.astro`.
+  Twitter Card tags, and JSON-LD (`Person` + `WebSite`) are all generated
+  in `src/layouts/BaseLayout.astro`.
 - `sitemap.xml` is generated automatically by `@astrojs/sitemap` at
   build time; `public/robots.txt` points to it.
 - Semantic HTML (`header`/`nav`/`main`/`article`/`footer`), a
@@ -157,8 +144,7 @@ It appears automatically on `/blog/`, newest first, at
 
 Run a Lighthouse audit against the deployed URL (or `npm run preview`
 locally) to verify; nothing in this build should score below ~90 on any
-category, but you should re-check after replacing the avatar/OG-image
-placeholders with real photos.
+category, but re-check after adding real project photos/video.
 
 ## Deployment
 
@@ -177,9 +163,8 @@ site: "https://daniellandry-create.github.io",
 base: "/personal-website",
 ```
 
-**One-time setup after first push:** in the repo's Settings → Pages, set
-**Source** to **GitHub Actions** (not "Deploy from a branch"). After
-that, every push to `main` deploys automatically — no manual step.
+Pages is already set to build from **GitHub Actions** (Settings →
+Pages), so every push to `main` deploys automatically — no manual step.
 
 ### Connecting a custom domain later
 
@@ -193,30 +178,17 @@ that, every push to `main` deploys automatically — no manual step.
 
 ## Next steps
 
-Everything below is marked with a placeholder in the code
-(`[YOUR NAME]`, `[YOUR BIO HERE]`, etc.) so it's easy to grep for:
-
-- [ ] `src/site.config.ts` — your name, tagline, email, location, and
-      social links (this drives the header, footer, and JSON-LD).
-- [ ] `src/pages/index.astro` and `src/pages/about.astro` — replace the
-      placeholder bio copy.
-- [ ] Replace the avatar placeholder (currently your initials on a
-      gradient tile) with a real photo — swap the markup in
-      `src/pages/index.astro`'s `.avatar` block for an `<Image />`.
-- [ ] `src/content/projects/` — replace the 3 sample projects with your
-      own; add real screenshots via `image:` in the frontmatter (drop
-      files in `src/assets/` and reference them) for automatic
-      optimization, or delete `image` to keep the placeholder tile.
-- [ ] `src/content/blog/` — replace or delete the sample post.
-- [ ] `public/resume.pdf` — replace the generated placeholder with your
-      real resume (same filename, or update `resumePath` in
-      `site.config.ts`).
-- [ ] `public/og-image.png`, `public/favicon.svg`, `public/icon-*.png`,
-      `public/apple-touch-icon.png` — regenerate with your own branding
-      (all currently a placeholder teal monogram).
+- [ ] Add real photos/video to the Dice Mural Machine and
+      Postcard-Vending Machine project pages — replace the placeholder
+      tiles in each project's `<MediaGallery />` (see "Adding a
+      project" above).
+- [ ] Replace the avatar placeholder on the home page (currently
+      initials on a gradient tile) with a real photo — swap the markup
+      in `src/pages/index.astro`'s `.avatar` block for an `<Image />`.
 - [ ] Set `formspreeEndpoint` in `site.config.ts` to enable the contact
-      form (free account at [formspree.io](https://formspree.io)).
-- [ ] Connect a custom domain (see above) once you have one.
+      form (free account at [formspree.io](https://formspree.io)); it
+      currently shows direct contact info only.
+- [ ] Connect a custom domain (see above), if/when you have one.
 
 ## License
 
