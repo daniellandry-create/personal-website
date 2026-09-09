@@ -1,0 +1,145 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { siteConfig } from "../site.config";
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  publishedDate?: Date;
+  updatedDate?: Date;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  image = `${import.meta.env.BASE_URL}og-image.png`,
+  type = "website",
+  publishedDate,
+  updatedDate,
+  noIndex = false,
+} = Astro.props;
+
+// Astro.site is the deployment origin (no base path); Astro.url.pathname
+// already includes the configured `base`, so combining them yields the
+// correct fully-qualified URL whether the base is "/" or a repo subpath.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(image, Astro.site);
+const pageTitle = title === siteConfig.name ? title : `${title} | ${siteConfig.name}`;
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  jobTitle: "Software Engineer",
+  description: siteConfig.description,
+  sameAs: [
+    "https://github.com/[YOUR-GITHUB-USERNAME]",
+    "https://www.linkedin.com/in/[YOUR-LINKEDIN]",
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  url: siteConfig.url,
+};
+
+const articleJsonLd =
+  type === "article"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: title,
+        description,
+        image: ogImageURL.toString(),
+        author: { "@type": "Person", name: siteConfig.name },
+        datePublished: publishedDate?.toISOString(),
+        dateModified: (updatedDate ?? publishedDate)?.toISOString(),
+      }
+    : null;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!--
+      Runs synchronously, before first paint, so the correct theme is applied
+      immediately and there is no flash of the wrong color scheme.
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem("theme");
+          const theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch {
+          /* localStorage unavailable; CSS media query fallback still applies */
+        }
+      })();
+    </script>
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <link rel="alternate icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
+    <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}apple-touch-icon.png`} />
+    <link rel="manifest" href={`${import.meta.env.BASE_URL}site.webmanifest`} />
+    <meta name="theme-color" content="#0d7d6e" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:locale" content={siteConfig.locale} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Structured data -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personJsonLd)}></script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)}></script>
+    {articleJsonLd && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(articleJsonLd)}
+      ></script>
+    )}
+
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

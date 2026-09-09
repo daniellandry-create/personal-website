@@ -1,0 +1,30 @@
+---
+import { siteConfig, socialLinks } from "../site.config";
+import Icon from "./Icon.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p class="text-muted">
+      &copy; {year} {siteConfig.name}. All rights reserved.
+    </p>
+
+    <ul class="social-links" aria-label="Social links">
+      {socialLinks.map((social) => (
+        <li>
+          <a
+            href={social.href}
+            target={social.icon === "mail" ? undefined : "_blank"}
+            rel={social.icon === "mail" ? undefined : "noopener noreferrer"}
+            aria-label={social.label}
+            title={social.label}
+          >
+            <Icon name={social.icon} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>
