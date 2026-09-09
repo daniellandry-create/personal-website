@@ -55,7 +55,7 @@ reuse, TypeScript, and a Markdown-based content model.
 
 ## Local development
 
-Requires Node.js 20+.
+Requires Node.js 22.12+ (Astro 7's minimum).
 
 ```bash
 npm install
