@@ -21,6 +21,15 @@ const projects = defineCollection({
       featured: z.boolean().default(false),
       // Lower numbers sort first; ties fall back to featured, then title.
       order: z.number().default(100),
+      // Extra photos for the project detail page's media gallery.
+      // Paths are relative to /public, e.g. "/projects/my-project/shot.jpg".
+      gallery: z
+        .array(z.object({ src: z.string(), alt: z.string() }))
+        .default([]),
+      // Optional video walkthrough for the media gallery, also relative to /public.
+      video: z
+        .object({ src: z.string(), poster: z.string().optional() })
+        .optional(),
     }),
 });
 

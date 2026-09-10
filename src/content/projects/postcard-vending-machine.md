@@ -6,6 +6,16 @@ dateRange: "Oct. 2025 - Present"
 tags: ["Leadership", "CAD", "Electronics", "Rapid Prototyping", "Mechanical Design"]
 featured: true
 order: 2
+gallery:
+  - src: "/projects/postcard-vending-machine/cartridge-v2.jpg"
+    alt: "Postcard cartridge design, version 2"
+  - src: "/projects/postcard-vending-machine/cartridge-v3.jpg"
+    alt: "Postcard cartridge design, version 3"
+  - src: "/projects/postcard-vending-machine/cartridge-v4.jpg"
+    alt: "Postcard cartridge design, version 4"
+video:
+  src: "/projects/postcard-vending-machine/cartridge-screen-recording.mp4"
+  poster: "/projects/postcard-vending-machine/cartridge-screen-recording-poster.jpg"
 ---
 
 ## Overview
@@ -29,6 +39,7 @@ retail machine in one, designed and built entirely from scratch.
 
 ## Status
 
-In active development as of the 2025-2026 school year. Build photos,
-CAD renders, and a demo video of the finished machine go here -- see
-the placeholders below.
+In active development as of the 2025-2026 school year. The postcard
+cartridge -- the mechanism that holds and dispenses prints -- is
+through several design iterations, shown below along with a screen
+recording walkthrough.

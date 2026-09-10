@@ -1,42 +1,65 @@
 ---
-// Reserves visual space for photos/video on a project page before real
-// media exists. Replace a <div class="media-placeholder"> with a real
-// <Image /> (astro:assets) or a <video>/embed once you have footage --
-// see the comment at the bottom of this file for the swap pattern.
+// Renders real photos/video when provided; otherwise reserves visual
+// space with placeholders until footage exists.
 import Icon from "./Icon.astro";
+
+interface Photo {
+  src: string;
+  alt: string;
+}
+
+interface Video {
+  src: string;
+  poster?: string;
+}
 
 interface Props {
   photoCount?: number;
+  photos?: Photo[];
+  video?: Video;
 }
 
-const { photoCount = 3 } = Astro.props;
+const { photoCount = 3, photos, video } = Astro.props;
 ---
 
 <div class="media-gallery">
-  <div class="media-gallery__grid">
-    {Array.from({ length: photoCount }).map((_, i) => (
-      <div class="media-placeholder">
-        <Icon name="image" />
-        <span>Photo {i + 1}</span>
-      </div>
-    ))}
-  </div>
-  <div class="media-placeholder media-placeholder--video">
-    <Icon name="play" />
-    <span>Video walkthrough</span>
-  </div>
+  {photos && photos.length > 0 ? (
+    <div class="media-gallery__grid">
+      {photos.map((photo) => (
+        <img src={photo.src} alt={photo.alt} loading="lazy" class="media-photo" />
+      ))}
+    </div>
+  ) : (
+    <div class="media-gallery__grid">
+      {Array.from({ length: photoCount }).map((_, i) => (
+        <div class="media-placeholder">
+          <Icon name="image" />
+          <span>Photo {i + 1}</span>
+        </div>
+      ))}
+    </div>
+  )}
+  {video ? (
+    <video controls poster={video.poster} class="media-video">
+      <source src={video.src} type="video/mp4" />
+    </video>
+  ) : (
+    <div class="media-placeholder media-placeholder--video">
+      <Icon name="play" />
+      <span>Video walkthrough</span>
+    </div>
+  )}
 </div>
 
-<!--
-  To add a real photo once you have one:
-    import { Image } from "astro:assets";
-    import shot from "../assets/projects/dice-mural/build-01.jpg";
-    ...
-    <Image src={shot} alt="Describe what's shown" width={640} height={480} />
-
-  To add a real video, replace the video placeholder with either:
-    <video controls poster="/projects/dice-mural/poster.jpg">
-      <source src="/projects/dice-mural/demo.mp4" type="video/mp4" />
-    </video>
-  or an embed (YouTube/Vimeo) in an <iframe>.
--->
+<style>
+  .media-photo {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+  .media-video {
+    width: 100%;
+    border-radius: var(--radius-md);
+  }
+</style>
