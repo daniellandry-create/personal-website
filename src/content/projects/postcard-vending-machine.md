@@ -11,7 +11,7 @@ gallery:
     alt: "Postcard cartridge design, version 2"
   - src: "/projects/postcard-vending-machine/cartridge-v3.jpg"
     alt: "Postcard cartridge design, version 3"
-  - src: "public/projects/postcard-vending-machine/cartridge-v4.jpg"
+  - src: "/projects/postcard-vending-machine/cartridge-v4.jpg"
     alt: "Postcard cartridge design, version 4"
 video:
   src: "/projects/postcard-vending-machine/cartridge-screen-recording.mp4"
