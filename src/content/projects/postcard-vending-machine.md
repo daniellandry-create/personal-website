@@ -7,11 +7,13 @@ tags: ["Leadership", "CAD", "Electronics", "Rapid Prototyping", "Mechanical Desi
 featured: true
 order: 2
 gallery:
+  - src: "/projects/postcard-vending-machine/cartridge-v1.png"
+    alt: "Postcard cartridge design, version 1"
   - src: "/projects/postcard-vending-machine/cartridge-v2.jpg"
     alt: "Postcard cartridge design, version 2"
   - src: "/projects/postcard-vending-machine/cartridge-v3.jpg"
     alt: "Postcard cartridge design, version 3"
-  - src: "/projects/postcard-vending-machine/cartridge-v4.jpg"
+  - src: "/projects/postcard-vending-machine/cartridge-v4.png"
     alt: "Postcard cartridge design, version 4"
 video:
   src: "/projects/postcard-vending-machine/cartridge-screen-recording.mp4"
