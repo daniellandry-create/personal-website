@@ -6,6 +6,19 @@ dateRange: "Mar. 2026 - Present"
 tags: ["SolidWorks", "3D Printing", "Arduino", "Motor Control", "OLED Displays", "Embedded Systems"]
 featured: true
 order: 1
+image: "../../assets/projects/dice-mural-machine-card.png"
+imageAlt: "A single white six-sided die with black pips"
+gallery:
+  - src: "/projects/dice-mural-machine/breadboard-control-electronics.png"
+    alt: "Breadboard prototype of the motor driver and control electronics for the Dice Mural Machine"
+  - src: "/projects/dice-mural-machine/tower-assembly.png"
+    alt: "Assembled multi-tier tower structure of the Dice Mural Machine with wiring running to the top control level"
+  - src: "/projects/dice-mural-machine/dice-placement-mechanism.png"
+    alt: "3D-printed dice hopper and placement arm mechanism holding a die in its gripper"
+# No footage yet -- hides the "Video walkthrough" placeholder on the
+# project page until there's a real video to link. Remove this line
+# (or set true) once a video is ready.
+showVideoPlaceholder: false
 ---
 
 ## Overview
@@ -32,6 +45,6 @@ mural built from hundreds of physical dice.
 
 ## Status
 
-Actively in development as of March 2026. More detail, a full build
-log, and real photos/video go here as the machine comes together --
-see the placeholders below for where that media will live.
+Actively in development as of March 2026. More detail and a full
+build log go here as the machine comes together -- see the photos
+below for a look at progress so far.

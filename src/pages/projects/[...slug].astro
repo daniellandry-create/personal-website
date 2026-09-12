@@ -14,8 +14,18 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
-const { title, description, role, dateRange, tags, liveUrl, repoUrl, gallery, video } =
-  project.data;
+const {
+  title,
+  description,
+  role,
+  dateRange,
+  tags,
+  liveUrl,
+  repoUrl,
+  gallery,
+  video,
+  showVideoPlaceholder,
+} = project.data;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -59,7 +69,7 @@ const { title, description, role, dateRange, tags, liveUrl, repoUrl, gallery, vi
 
     <section style="margin-top:3rem;">
       <h2 style="margin-bottom:1.25rem;">Photos & video</h2>
-      <MediaGallery photos={gallery} video={video} />
+      <MediaGallery photos={gallery} video={video} showVideo={showVideoPlaceholder} />
     </section>
   </article>
 </BaseLayout>

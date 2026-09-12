@@ -17,9 +17,12 @@ interface Props {
   photoCount?: number;
   photos?: Photo[];
   video?: Video;
+  // Set false to omit the video section entirely (including its
+  // placeholder) for projects with no footage planned yet.
+  showVideo?: boolean;
 }
 
-const { photoCount = 3, photos, video } = Astro.props;
+const { photoCount = 3, photos, video, showVideo = true } = Astro.props;
 
 // Gallery paths are authored relative to /public (e.g. "/projects/x/shot.jpg"),
 // so they need the configured base prepended to work on a project subpath.
@@ -50,12 +53,12 @@ const withBase = (src: string) =>
     <video controls poster={video.poster && withBase(video.poster)} class="media-video">
       <source src={withBase(video.src)} type="video/mp4" />
     </video>
-  ) : (
+  ) : showVideo ? (
     <div class="media-placeholder media-placeholder--video">
       <Icon name="play" />
       <span>Video walkthrough</span>
     </div>
-  )}
+  ) : null}
 </div>
 
 <style>
