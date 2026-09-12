@@ -20,13 +20,20 @@ interface Props {
 }
 
 const { photoCount = 3, photos, video } = Astro.props;
+
+// Gallery paths are authored relative to /public (e.g. "/projects/x/shot.jpg"),
+// so they need the configured base prepended to work on a project subpath.
+// External and data URLs are passed through untouched.
+const base = import.meta.env.BASE_URL;
+const withBase = (src: string) =>
+  /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(src) ? src : `${base}${src.replace(/^\//, "")}`;
 ---
 
 <div class="media-gallery">
   {photos && photos.length > 0 ? (
     <div class="media-gallery__grid">
       {photos.map((photo) => (
-        <img src={photo.src} alt={photo.alt} loading="lazy" class="media-photo" />
+        <img src={withBase(photo.src)} alt={photo.alt} loading="lazy" class="media-photo" />
       ))}
     </div>
   ) : (
@@ -40,8 +47,8 @@ const { photoCount = 3, photos, video } = Astro.props;
     </div>
   )}
   {video ? (
-    <video controls poster={video.poster} class="media-video">
-      <source src={video.src} type="video/mp4" />
+    <video controls poster={video.poster && withBase(video.poster)} class="media-video">
+      <source src={withBase(video.src)} type="video/mp4" />
     </video>
   ) : (
     <div class="media-placeholder media-placeholder--video">
