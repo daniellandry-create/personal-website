@@ -26,7 +26,7 @@ const hasForm = siteConfig.formspreeEndpoint.length > 0;
               <Icon name="mail" style="width:1em;height:1em;display:inline;margin-right:0.4em;" />
               <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
             </li>
-            {socialLinks.map((social) => (
+            {socialLinks.filter((social) => social.icon !== "mail").map((social) => (
               <li>
                 <Icon
                   name={social.icon}
@@ -39,8 +39,7 @@ const hasForm = siteConfig.formspreeEndpoint.length > 0;
             ))}
           </ul>
           <p class="text-muted" style="margin-top:1.5rem;">
-            Based in {siteConfig.location}. [Add availability, timezone, or response-time notes here
-            if useful.]
+            Based in {siteConfig.location}.
           </p>
         </div>
 
@@ -78,21 +77,6 @@ const hasForm = siteConfig.formspreeEndpoint.length > 0;
           </div>
         ) : null}
       </div>
-
-      {!hasForm && (
-        <p class="form-hint">
-          To enable the contact form, create a free endpoint at{" "}
-          <a
-            class="link-inline"
-            href="https://formspree.io"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            formspree.io
-          </a>{" "}
-          and set <code>formspreeEndpoint</code> in <code>src/site.config.ts</code>.
-        </p>
-      )}
     </section>
   </div>
 </BaseLayout>
