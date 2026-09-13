@@ -95,7 +95,8 @@ const sized = photos.map((photo) => ({
   }
 
   .photo-reel__slide {
-    flex: 0 0 min(78%, 22rem);
+    flex: 0 0 auto;
+    max-width: min(78%, 22rem);
     scroll-snap-align: start;
   }
 
@@ -104,12 +105,14 @@ const sized = photos.map((photo) => ({
   }
 
   .photo-reel__slide img {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
+    height: 20rem;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
     border-radius: var(--radius-md);
     background: var(--color-bg-inset);
     display: block;
+    margin: 0 auto;
   }
 
   .photo-reel__slide figcaption {
@@ -145,7 +148,11 @@ const sized = photos.map((photo) => ({
 
   @media (min-width: 640px) {
     .photo-reel__slide {
-      flex-basis: min(42%, 20rem);
+      max-width: min(42%, 20rem);
+    }
+
+    .photo-reel__slide img {
+      height: 24rem;
     }
   }
 </style>
