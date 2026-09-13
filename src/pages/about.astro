@@ -1,6 +1,40 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PhotoReel from "../components/PhotoReel.astro";
 import { siteConfig } from "../site.config";
+import artWallPhoto from "../assets/about/art-wall.png";
+import ceramicRosesPhoto from "../assets/about/ceramic-roses.png";
+import tennisPhoto from "../assets/about/tennis.jpg";
+import dancePhoto from "../assets/about/dance.png";
+import surfingPhoto from "../assets/about/surfing.png";
+
+const hobbyPhotos = [
+  {
+    src: artWallPhoto,
+    alt: "Framed paintings and drawings, including a painting of a boy playing piano in a field and a graphite rose drawing",
+    caption: "Painting & drawing",
+  },
+  {
+    src: ceramicRosesPhoto,
+    alt: "Hand-built ceramic vase with a bouquet of ceramic roses",
+    caption: "Ceramics",
+  },
+  {
+    src: tennisPhoto,
+    alt: "Playing a forehand during a tennis match",
+    caption: "Tennis",
+  },
+  {
+    src: dancePhoto,
+    alt: "Performing with Danceworks under red stage lighting",
+    caption: "Danceworks",
+  },
+  {
+    src: surfingPhoto,
+    alt: "Carrying a surfboard along the cliffs above the beach",
+    caption: "Surfing",
+  },
+];
 
 const skillGroups = [
   {
@@ -96,9 +130,7 @@ const experience = [
         involves a ball (plus surfing and mountain biking) is right up my alley. Outside of sports, I've 
         dabbled in a number of different hobbies, such as art, dancing, and piano.
       </p>
-      <p>
-      
-      </p>
+      <PhotoReel photos={hobbyPhotos} label="Photos of hobbies outside of engineering" />
     </section>
 
     <section class="section--tight">

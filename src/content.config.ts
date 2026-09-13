@@ -23,7 +23,9 @@ const projects = defineCollection({
       order: z.number().default(100),
       // Extra photos for the project detail page's media gallery.
       // Paths are relative to /public, e.g. "/projects/my-project/shot.jpg".
-      gallery: z.array(z.object({ src: z.string(), alt: z.string() })).default([]),
+      gallery: z
+        .array(z.object({ src: z.string(), alt: z.string(), caption: z.string().optional() }))
+        .default([]),
       // Optional video walkthrough for the media gallery, also relative to /public.
       video: z.object({ src: z.string(), poster: z.string().optional() }).optional(),
       // Set false to hide the "Video walkthrough" placeholder entirely

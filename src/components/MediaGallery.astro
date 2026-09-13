@@ -6,6 +6,7 @@ import Icon from "./Icon.astro";
 interface Photo {
   src: string;
   alt: string;
+  caption?: string;
 }
 
 interface Video {
@@ -36,7 +37,10 @@ const withBase = (src: string) =>
   {photos && photos.length > 0 ? (
     <div class="media-gallery__grid">
       {photos.map((photo) => (
-        <img src={withBase(photo.src)} alt={photo.alt} loading="lazy" class="media-photo" />
+        <figure class="media-figure">
+          <img src={withBase(photo.src)} alt={photo.alt} loading="lazy" class="media-photo" />
+          {photo.caption && <figcaption class="media-caption">{photo.caption}</figcaption>}
+        </figure>
       ))}
     </div>
   ) : (
@@ -62,6 +66,9 @@ const withBase = (src: string) =>
 </div>
 
 <style>
+  .media-figure {
+    margin: 0;
+  }
   .media-photo {
     width: 100%;
     aspect-ratio: 4 / 3;
@@ -69,6 +76,12 @@ const withBase = (src: string) =>
     object-position: center;
     background: var(--color-bg-inset);
     border-radius: var(--radius-md);
+  }
+  .media-caption {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    text-align: center;
   }
   .media-video {
     width: 100%;

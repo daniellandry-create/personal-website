@@ -6,15 +6,21 @@ dateRange: "Oct. 2025 - Present"
 tags: ["Leadership", "CAD", "Electronics", "Rapid Prototyping", "Mechanical Design"]
 featured: true
 order: 2
+image: "../../assets/projects/postcard-vending-machine-card.png"
+imageAlt: "Postcard cartridge design, version 4 (current)"
 gallery:
   - src: "/projects/postcard-vending-machine/cartridge-v1.png"
     alt: "Postcard cartridge design, version 1"
+    caption: "Version 1"
   - src: "/projects/postcard-vending-machine/cartridge-v2.jpg"
     alt: "Postcard cartridge design, version 2"
+    caption: "Version 2"
   - src: "/projects/postcard-vending-machine/cartridge-v3.jpg"
     alt: "Postcard cartridge design, version 3"
+    caption: "Version 3"
   - src: "/projects/postcard-vending-machine/cartridge-v4.png"
     alt: "Postcard cartridge design, version 4"
+    caption: "Version 4 (current)"
 video:
   src: "/projects/postcard-vending-machine/cartridge-screen-recording.mp4"
   poster: "/projects/postcard-vending-machine/cartridge-screen-recording-poster.jpg"
