@@ -19,14 +19,30 @@ interface Props {
 
 const { photos, label = "Photo reel" } = Astro.props;
 const reelId = `photo-reel-${Math.random().toString(36).slice(2, 9)}`;
+
+// Render each photo at a shared target height and a width derived from its
+// own aspect ratio, so portrait shots stay narrow and landscape shots go
+// wide instead of every slide being force-cropped into the same box.
+const TARGET_HEIGHT = 640;
+const sized = photos.map((photo) => ({
+  ...photo,
+  width: Math.round(TARGET_HEIGHT * (photo.src.width / photo.src.height)),
+  height: TARGET_HEIGHT,
+}));
 ---
 
 <div class="photo-reel" aria-roledescription="carousel" aria-label={label}>
   <ul class="photo-reel__track" id={reelId}>
-    {photos.map((photo) => (
+    {sized.map((photo) => (
       <li class="photo-reel__slide">
         <figure>
-          <Image src={photo.src} alt={photo.alt} width={640} height={800} loading="lazy" />
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            width={photo.width}
+            height={photo.height}
+            loading="lazy"
+          />
           {photo.caption && <figcaption>{photo.caption}</figcaption>}
         </figure>
       </li>
