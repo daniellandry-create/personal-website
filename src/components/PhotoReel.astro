@@ -22,19 +22,27 @@ const reelId = `photo-reel-${Math.random().toString(36).slice(2, 9)}`;
 
 // Render each photo at a shared target height and a width derived from its
 // own aspect ratio, so portrait shots stay narrow and landscape shots go
-// wide instead of every slide being force-cropped into the same box.
+// wide instead of every slide being force-cropped into the same box. The
+// ratio is also threaded through to CSS (--ratio) so the display width is
+// computed directly from it, rather than left for the browser to infer from
+// an auto-sized flex item -- that indirection was collapsing wide photos
+// down to the narrow default slide width.
 const TARGET_HEIGHT = 640;
-const sized = photos.map((photo) => ({
-  ...photo,
-  width: Math.round(TARGET_HEIGHT * (photo.src.width / photo.src.height)),
-  height: TARGET_HEIGHT,
-}));
+const sized = photos.map((photo) => {
+  const ratio = photo.src.width / photo.src.height;
+  return {
+    ...photo,
+    width: Math.round(TARGET_HEIGHT * ratio),
+    height: TARGET_HEIGHT,
+    ratio,
+  };
+});
 ---
 
 <div class="photo-reel" aria-roledescription="carousel" aria-label={label}>
   <ul class="photo-reel__track" id={reelId}>
     {sized.map((photo) => (
-      <li class="photo-reel__slide">
+      <li class="photo-reel__slide" style={`--ratio:${photo.ratio}`}>
         <figure>
           <Image
             src={photo.src}
@@ -94,9 +102,12 @@ const sized = photos.map((photo) => ({
     scrollbar-width: thin;
   }
 
+  .photo-reel {
+    --reel-height: 20rem;
+  }
+
   .photo-reel__slide {
     flex: 0 0 auto;
-    max-width: min(78%, 22rem);
     scroll-snap-align: start;
   }
 
@@ -105,14 +116,13 @@ const sized = photos.map((photo) => ({
   }
 
   .photo-reel__slide img {
-    height: 20rem;
-    width: auto;
-    max-width: 100%;
+    height: var(--reel-height);
+    width: calc(var(--reel-height) * var(--ratio, 0.8));
+    max-width: 85vw;
     object-fit: contain;
     border-radius: var(--radius-md);
     background: var(--color-bg-inset);
     display: block;
-    margin: 0 auto;
   }
 
   .photo-reel__slide figcaption {
@@ -147,12 +157,12 @@ const sized = photos.map((photo) => ({
   }
 
   @media (min-width: 640px) {
-    .photo-reel__slide {
-      max-width: min(42%, 20rem);
+    .photo-reel {
+      --reel-height: 24rem;
     }
 
     .photo-reel__slide img {
-      height: 24rem;
+      max-width: 44vw;
     }
   }
 </style>
