@@ -7,6 +7,8 @@ interface Photo {
   src: string;
   alt: string;
   caption?: string;
+  // When set, the photo gets its own full-width row with this text below it.
+  description?: string;
 }
 
 interface Video {
@@ -31,18 +33,46 @@ const { photoCount = 3, photos, video, showVideo = true } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const withBase = (src: string) =>
   /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(src) ? src : `${base}${src.replace(/^\//, "")}`;
+
+// Keep the authored order: runs of plain photos share a grid, and each
+// photo with a description breaks out onto its own row.
+type Row = { feature: Photo } | { grid: Photo[] };
+const rows: Row[] = [];
+for (const photo of photos ?? []) {
+  const last = rows.at(-1);
+  if (photo.description) rows.push({ feature: photo });
+  else if (last && "grid" in last) last.grid.push(photo);
+  else rows.push({ grid: [photo] });
+}
 ---
 
 <div class="media-gallery">
-  {photos && photos.length > 0 ? (
-    <div class="media-gallery__grid">
-      {photos.map((photo) => (
-        <figure class="media-figure">
-          <img src={withBase(photo.src)} alt={photo.alt} loading="lazy" class="media-photo" />
-          {photo.caption && <figcaption class="media-caption">{photo.caption}</figcaption>}
+  {rows.length > 0 ? (
+    rows.map((row) =>
+      "feature" in row ? (
+        <figure class="media-figure media-figure--feature">
+          <img
+            src={withBase(row.feature.src)}
+            alt={row.feature.alt}
+            loading="lazy"
+            class="media-photo media-photo--feature"
+          />
+          <figcaption class="media-feature-text">
+            {row.feature.caption && <strong>{row.feature.caption}</strong>}
+            <p>{row.feature.description}</p>
+          </figcaption>
         </figure>
-      ))}
-    </div>
+      ) : (
+        <div class="media-gallery__grid">
+          {row.grid.map((photo) => (
+            <figure class="media-figure">
+              <img src={withBase(photo.src)} alt={photo.alt} loading="lazy" class="media-photo" />
+              {photo.caption && <figcaption class="media-caption">{photo.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      ),
+    )
   ) : (
     <div class="media-gallery__grid">
       {Array.from({ length: photoCount }).map((_, i) => (
@@ -82,6 +112,24 @@ const withBase = (src: string) =>
     font-size: 0.9rem;
     color: var(--color-text-muted);
     text-align: center;
+  }
+  .media-figure--feature {
+    max-width: 42rem;
+    margin-top: 1rem;
+  }
+  .media-photo--feature {
+    aspect-ratio: auto;
+    height: auto;
+  }
+  .media-feature-text {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .media-feature-text p {
+    margin: 0;
+    color: var(--color-text-muted);
   }
   .media-video {
     width: 100%;

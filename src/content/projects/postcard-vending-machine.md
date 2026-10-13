@@ -21,9 +21,11 @@ gallery:
   - src: "/projects/postcard-vending-machine/cartridge-v4.png"
     alt: "Postcard cartridge design, version 4"
     caption: "Version 4 (current)"
+    description: "We're employing a mostly 3D-printed friction feeder mechanism to separate and dispense postcards."
   - src: "/projects/postcard-vending-machine/controller-pcb.png"
     alt: "KiCad 3D render of the motor and lights controller PCB"
     caption: "Motor/lights controller PCB"
+    description: "A PCB I designed in KiCad to control the motor, lights, and power the microcontroller."
 video:
   src: "/projects/postcard-vending-machine/cartridge-screen-recording.mp4"
   poster: "/projects/postcard-vending-machine/cartridge-screen-recording-poster.jpg"
