@@ -6,10 +6,13 @@ import Icon from "../../components/Icon.astro";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
-  return projects.map((project) => ({
-    params: { slug: project.id },
-    props: { project },
-  }));
+  // Projects with an externalUrl link off-site and have no detail page.
+  return projects
+    .filter((project) => !project.data.externalUrl)
+    .map((project) => ({
+      params: { slug: project.id },
+      props: { project },
+    }));
 }
 
 const { project } = Astro.props;

@@ -3,7 +3,7 @@ title: "Postcard-Vending Machine"
 description: "A vending machine, designed and built from scratch, that lets Yale student artists sell postcard-sized prints of their work in a major campus thoroughfare."
 role: "Project Manager"
 dateRange: "Oct. 2025 - Present"
-tags: ["Leadership", "CAD", "Electronics", "Rapid Prototyping", "Mechanical Design"]
+tags: ["Leadership", "CAD", "KiCad", "Electronics", "Rapid Prototyping", "Mechanical Design"]
 featured: true
 order: 2
 image: "../../assets/projects/postcard-vending-machine-card.png"
@@ -21,6 +21,9 @@ gallery:
   - src: "/projects/postcard-vending-machine/cartridge-v4.png"
     alt: "Postcard cartridge design, version 4"
     caption: "Version 4 (current)"
+  - src: "/projects/postcard-vending-machine/controller-pcb.png"
+    alt: "KiCad 3D render of the motor and lights controller PCB"
+    caption: "Motor/lights controller PCB"
 video:
   src: "/projects/postcard-vending-machine/cartridge-screen-recording.mp4"
   poster: "/projects/postcard-vending-machine/cartridge-screen-recording-poster.jpg"
@@ -41,7 +44,9 @@ retail machine in one, designed and built entirely from scratch.
 - **Mechanical & electrical design.** Designing the machine's
   mechanical and electrical systems from scratch -- CAD modeling,
   electronics selection and wiring, and rapid-prototyping the
-  dispensing mechanism -- on a $1,000 budget.
+  dispensing mechanism -- on a $1,000 budget. For electronics, I
+  designed a PCB in KiCad to control the motor, lights, and power the
+  microcontroller.
 - **Program management.** Overseeing materials procurement and
   iterative testing, balancing scope against the budget and timeline.
 

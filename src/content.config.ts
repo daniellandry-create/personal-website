@@ -18,6 +18,10 @@ const projects = defineCollection({
       tags: z.array(z.string()).default([]),
       liveUrl: z.string().url().optional(),
       repoUrl: z.string().url().optional(),
+      // Set when the project's write-up lives off-site (e.g. a Notion page).
+      // The card links there instead of to a detail page, and no detail
+      // page is generated.
+      externalUrl: z.string().url().optional(),
       featured: z.boolean().default(false),
       // Lower numbers sort first; ties fall back to featured, then title.
       order: z.number().default(100),

@@ -8,16 +8,27 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, description, image, imageAlt, role, dateRange, tags, liveUrl, repoUrl } =
-  project.data;
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  role,
+  dateRange,
+  tags,
+  liveUrl,
+  repoUrl,
+  externalUrl,
+} = project.data;
 const base = import.meta.env.BASE_URL;
-const detailHref = `${base}projects/${project.id}/`;
+const detailHref = externalUrl ?? `${base}projects/${project.id}/`;
+const linkAttrs = externalUrl ? { target: "_blank", rel: "noopener noreferrer" } : {};
 ---
 
 <article class="card project-card">
   <div class="project-card__media">
     {image ? (
-      <Image src={image} alt={imageAlt ?? ""} width={640} height={400} loading="lazy" />
+      <Image src={image} alt={imageAlt ?? ""} width={640} loading="lazy" />
     ) : (
       <span aria-hidden="true" style="font-size:2rem;font-weight:700;">
         {title
@@ -31,7 +42,7 @@ const detailHref = `${base}projects/${project.id}/`;
   </div>
   <div class="project-card__body">
     <h3 class="project-card__title">
-      <a href={detailHref}>{title}</a>
+      <a href={detailHref} {...linkAttrs}>{title}</a>
     </h3>
     {(role || dateRange) && (
       <p class="text-muted" style="font-size:0.85rem;margin-top:-0.4rem;">
@@ -49,8 +60,12 @@ const detailHref = `${base}projects/${project.id}/`;
       </ul>
     )}
     <div class="project-card__links">
-      <a href={detailHref}>
-        View project <Icon name="arrow-right" style="width:0.85em;height:0.85em;display:inline" />
+      <a href={detailHref} {...linkAttrs}>
+        View project{" "}
+        <Icon
+          name={externalUrl ? "external" : "arrow-right"}
+          style="width:0.85em;height:0.85em;display:inline"
+        />
       </a>
       {liveUrl && (
         <a href={liveUrl} target="_blank" rel="noopener noreferrer">
